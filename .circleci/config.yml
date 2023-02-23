@@ -5,10 +5,10 @@ workflows:
   build:
     jobs:
       - build:
-        filters:
-          branches: 
-            only:
-            - main
+          filters:
+            branches: 
+              only:
+              - main
 
 jobs:
   build:  
@@ -28,4 +28,4 @@ jobs:
       - save_cache: 
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
-          - ./node_modules
+            - ./node_modules
