@@ -18,6 +18,7 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
+      - setup_remote_docker
       - run: 
           name: update-npm
           command: 'sudo npm install -g npm@8.1.4'
@@ -33,5 +34,14 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
+      - run:
+          name: docker-login
+          command: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - run:
+          name: Build Docker Image
+          command: docker build -t $IMAGE_NAME:latest .
+      -  run:
+          name: Publish Docker IMage
+          command: docker push $IMAGE_NAME
     
 
